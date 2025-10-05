@@ -1,0 +1,318 @@
+/* Navbar.css - Pure CSS for Astrokites Navbar */
+
+/* Root navbar styles */
+.navbar {
+  background: linear-gradient(to right, #eff6ff, #eef2ff, #f3e8ff);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px); /* Note: Limited browser support; fallback to no blur if needed */
+}
+
+/* Container for max-width and padding */
+.navbarContainer {
+  max-width: 80rem; /* Equivalent to max-w-7xl */
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .navbarContainer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbarContainer {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Inner flex container for navbar content */
+.navbarInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem; /* h-16 */
+}
+
+/* Logo section */
+.logoSection {
+  display: flex;
+  align-items: center;
+}
+
+.logoWrapper {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem; /* space-x-2 */
+}
+
+.logoIcon {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: #2563eb; /* blue-600 */
+}
+
+.logoText {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: bold;
+  background: linear-gradient(to right, #2563eb, #9333ea); /* from-blue-600 to-purple-600 */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Desktop navigation (hidden on mobile) */
+.desktopNav {
+  display: none;
+  margin-left: 2.5rem; /* md:ml-10 */
+  align-items: center;
+  gap: 0.25rem; /* md:space-x-1 */
+}
+
+@media (min-width: 768px) {
+  .desktopNav {
+    display: flex;
+  }
+}
+
+/* Navigation buttons (desktop and mobile variants) */
+.navButton,
+.mobileNavButton {
+  color: #374151; /* text-foreground (gray-700) */
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem; /* space-x-1 or space-x-2 */
+  padding: 0.5rem 0.75rem; /* px-3 py-2 or px-4 py-2 */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  cursor: pointer;
+  transition: all 0.2s ease; /* transition-colors */
+}
+
+.navButton:hover,
+.mobileNavButton:hover {
+  background-color: rgba(59, 130, 246, 0.1); /* hover:bg-blue-100/50 */
+  color: #1d4ed8; /* hover:text-blue-700 */
+}
+
+/* Search wrapper (hidden on mobile) */
+.searchWrapper {
+  display: none;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .searchWrapper {
+    display: block;
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1rem;
+  width: 1rem;
+  color: #9ca3af; /* text-muted-foreground (gray-400) */
+  pointer-events: none;
+}
+
+.searchInput,
+.mobileSearchInput {
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 2.5rem; /* pl-10 pr-4 py-2 */
+  background-color: rgba(255, 255, 255, 0.8); /* bg-white/80 */
+  border: 1px solid #bfdbfe; /* border-blue-200 */
+  border-radius: 9999px; /* rounded-full */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow-sm */
+  font-size: 0.875rem; /* text-sm */
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.searchInput {
+  width: 12rem; /* w-48 */
+}
+
+@media (min-width: 1024px) {
+  .searchInput {
+    width: 16rem; /* lg:w-64 */
+  }
+}
+
+.searchInput:focus,
+.mobileSearchInput:focus {
+  /* ring: 2px solid #3b82f6; focus:ring-2 focus:ring-blue-500 */
+  border-color: transparent;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+/* User buttons section (hidden on mobile) */
+.userButtons {
+  display: none;
+  align-items: center;
+  gap: 0.5rem; /* space-x-2 */
+}
+
+@media (min-width: 768px) {
+  .userButtons {
+    display: flex;
+  }
+}
+
+/* Sign In button (outline style) */
+.signInButton,
+.mobileSignInButton {
+  border: 1px solid #bfdbfe; /* border-blue-200 */
+  background: none;
+  color: #374151; /* text-foreground */
+  display: flex;
+  align-items: center;
+  gap: 0.25rem; /* space-x-1 */
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.signInButton:hover,
+.mobileSignInButton:hover {
+  background-color: #eff6ff; /* hover:bg-blue-50 */
+}
+
+/* Sign Up button (gradient primary style) */
+.signUpButton,
+.mobileSignUpButton {
+  background: linear-gradient(to right, #2563eb, #9333ea); /* from-blue-600 to-purple-600 */
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem; /* space-x-1 */
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border-radius: 9999px; /* rounded-full */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3); /* shadow-lg */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.signUpButton:hover,
+.mobileSignUpButton:hover {
+  background: linear-gradient(to right, #1d4ed8, #7c3aed); /* hover:from-blue-700 hover:to-purple-700 */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 8px rgba(59, 130, 246, 0.4);
+}
+
+/* Mobile menu button (hamburger) */
+.mobileMenuButton {
+  display: block;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #2563eb; /* text-blue-600 */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 0.375rem; /* rounded-md */
+}
+
+@media (min-width: 768px) {
+  .mobileMenuButton {
+    display: none;
+  }
+}
+
+.mobileMenuButton:hover {
+  background-color: rgba(59, 130, 246, 0.1); /* hover:bg-blue-100/50 */
+}
+
+/* Mobile menu wrapper */
+.mobileMenuWrapper {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .mobileMenuWrapper {
+    display: none;
+  }
+}
+
+/* Mobile menu content */
+.mobileMenuContent {
+  padding: 0.5rem 0.5rem 0.75rem 0.5rem; /* px-2 pt-2 pb-3 */
+  gap: 0.5rem; /* space-y-2 */
+  background-color: rgba(255, 255, 255, 0.8); /* bg-white/80 */
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem; /* rounded-xl */
+  margin-top: 0.5rem; /* mt-2 */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
+  border: 1px solid rgba(191, 219, 254, 0.5); /* border-blue-200/50 */
+}
+
+@media (min-width: 640px) {
+  .mobileMenuContent {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem; /* sm:px-3 */
+  }
+}
+
+/* Mobile search wrapper */
+.mobileSearchWrapper {
+  padding: 0.75rem 1rem; /* px-4 py-3 */
+  position: relative;
+}
+
+/* Mobile search input (same as desktop but full width) */
+.mobileSearchInput {
+  width: 100%;
+}
+
+/* Mobile auth buttons container */
+.mobileAuthButtons {
+  padding: 0.75rem 1rem; /* px-4 py-3 */
+  gap: 0.5rem; /* space-y-2 */
+}
+
+/* Mobile nav and auth buttons (full width) */
+.mobileNavButton,
+.mobileSignInButton,
+.mobileSignUpButton {
+  width: 100%;
+  justify-content: flex-start; /* For nav buttons */
+}
+
+.mobileSignInButton,
+.mobileSignUpButton {
+  justify-content: center; /* For auth buttons */
+}
+
+/* Icon sizes (consistent across) */
+.icon {
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+}
+
+/* General flex utilities for sections */
+.flex-center {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* space-x-4 for search/user section */
+}

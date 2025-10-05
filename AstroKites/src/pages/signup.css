@@ -1,0 +1,97 @@
+/* src/components/Signup.css */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); /* Weather-themed blue gradient */
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.signup-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.signup-title {
+  color: #2d3436;
+  font-size: 28px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.signup-subtitle {
+  color: #636e72;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #2d3436;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.form-group input {
+  padding: 12px;
+  border: 2px solid #dfe6e9;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #74b9ff;
+}
+
+.signup-button {
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.signup-button:hover {
+  transform: translateY(-2px);
+}
+
+.login-link {
+  margin-top: 20px;
+  color: #636e72;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #0984e3;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
