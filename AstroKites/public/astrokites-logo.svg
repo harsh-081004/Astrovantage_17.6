@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="kiteGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1e3a8a" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="58" fill="#f8fafc"/>
+  
+  <!-- Outer glow circle -->
+  <circle cx="60" cy="60" r="52" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Main kite diamond -->
+  <path d="M 60 20 L 85 55 L 60 90 L 35 55 Z" 
+        fill="url(#kiteGradient)" 
+        stroke="#1e40af" 
+        stroke-width="3"
+        filter="url(#shadow)"/>
+  
+  <!-- Kite inner details -->
+  <path d="M 60 20 L 60 90" stroke="#93c5fd" stroke-width="2" opacity="0.6"/>
+  <path d="M 35 55 L 85 55" stroke="#93c5fd" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Decorative triangles -->
+  <path d="M 60 20 L 72 55 L 60 55 Z" fill="#1e3a8a" opacity="0.3"/>
+  <path d="M 60 20 L 48 55 L 60 55 Z" fill="#3b82f6" opacity="0.3"/>
+  
+  <!-- Stars -->
+  <g filter="url(#glow)">
+    <path d="M 25 30 L 27 35 L 32 35 L 28 38 L 30 43 L 25 40 L 20 43 L 22 38 L 18 35 L 23 35 Z" 
+          fill="url(#starGradient)"/>
+    <path d="M 95 30 L 97 35 L 102 35 L 98 38 L 100 43 L 95 40 L 90 43 L 92 38 L 88 35 L 93 35 Z" 
+          fill="url(#starGradient)"/>
+    <path d="M 100 60 L 101.5 63 L 105 63 L 102 65 L 103 68 L 100 66 L 97 68 L 98 65 L 95 63 L 98.5 63 Z" 
+          fill="url(#starGradient)"/>
+  </g>
+  
+  <!-- Kite tail -->
+  <g opacity="0.9">
+    <path d="M 60 90 Q 62 96 60 100" stroke="#3b82f6" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="60" cy="100" r="3" fill="#fbbf24"/>
+    <circle cx="60" cy="105" r="2.5" fill="#3b82f6"/>
+    <circle cx="60" cy="109" r="2" fill="#1e40af"/>
+  </g>
+</svg>

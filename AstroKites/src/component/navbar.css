@@ -53,22 +53,36 @@
   flex-shrink: 0;
   align-items: center;
   gap: 0.5rem; /* space-x-2 */
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.logoWrapper:hover {
+  opacity: 0.9;
 }
 
 .logoIcon {
-  height: 1.5rem;
-  width: 1.5rem;
-  color: #2563eb; /* blue-600 */
+  height: 2.5rem;
+  width: 2.5rem;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(30, 58, 138, 0.3));
+}
+
+.logoWrapper:hover .logoIcon {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.4));
 }
 
 .logoText {
   font-size: 1.5rem; /* text-2xl */
-  font-weight: bold;
-  background: linear-gradient(to right, #2563eb, #9333ea); /* from-blue-600 to-purple-600 */
+  font-weight: 800;
+  background: linear-gradient(135deg, #1e40af, #3b82f6, #2563eb);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 4px rgba(30, 64, 175, 0.2);
 }
 
 /* Desktop navigation (hidden on mobile) */
@@ -106,6 +120,13 @@
 .mobileNavButton:hover {
   background-color: rgba(59, 130, 246, 0.1); /* hover:bg-blue-100/50 */
   color: #1d4ed8; /* hover:text-blue-700 */
+}
+
+/* Active state styling to match hover state */
+.navButton.active,
+.mobileNavButton.active {
+  background-color: rgba(59, 130, 246, 0.1); /* Same as hover bg-blue-100/50 */
+  color: #1d4ed8; /* Same as hover text-blue-700 */
 }
 
 /* Search wrapper (hidden on mobile) */

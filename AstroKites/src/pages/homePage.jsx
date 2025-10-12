@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./home.css";
+// import RotatingEarth from "../component/Globe";
 
 const Home = () => {
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("US");
-  const [selectedState, setSelectedState] = useState("CA");
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [countriesLoading, setCountriesLoading] = useState(true);
-  const [earthRotation, setEarthRotation] = useState(0);
-  const [earthXRotation, setEarthXRotation] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const navigate = useNavigate();
+
+  const handleExploreForecast = () => {
+    navigate('/forecast');
+  };
 
   return (
     <div className="home">
@@ -24,10 +20,11 @@ const Home = () => {
               <h1 className="hero-title">
                 Precise <span className="highlight">weather</span>, precisely for you.
               </h1>
+              <p className="hero-subtitle">
+                Harness the power of probability-based forecasting for smarter decisions
+              </p>
             </div>
-
-
-            <button className="cta-button start">Explore forecast</button>
+            <button className="cta-button start" onClick={handleExploreForecast}>Explore Forecast</button>
           </div>
         </div>
       </section>
@@ -37,9 +34,10 @@ const Home = () => {
         <h2>About Astrokites</h2>
         <p>
           Astrokites delivers hyper-local weather updates and interactive
-          forecasts powered by advanced data analytics. We help you make smarter
-          decisions — whether you’re planning a trip, farming, or just curious
-          about the skies.
+          forecasts powered by <strong>probability-based analytics</strong> and statistical modeling. 
+          Access both <strong>future weather predictions</strong> and <strong>historical weather data</strong> 
+          to make smarter decisions with confidence scores and data-driven insights — 
+          whether you're planning ahead or analyzing past weather patterns.
         </p>
       </section>
 
@@ -50,8 +48,8 @@ const Home = () => {
           <div className="feature">
             <h3>🌦 Real-Time Forecasts</h3>
             <p>
-              Get instant, location-based weather updates with AI-enhanced
-              predictions updated every 15 minutes.
+              Get instant, location-based weather updates with probability-driven
+              insights.
             </p>
           </div>
           <div className="feature">
@@ -71,8 +69,8 @@ const Home = () => {
           <div className="feature">
             <h3>📊 Advanced Analytics</h3>
             <p>
-              Detailed weather analytics including air quality, UV index, and
-              historical data comparisons.
+              Comprehensive weather analytics with probability distributions for future predictions, 
+              complete historical weather archives, air quality indices, and trend analysis.
             </p>
           </div>
           <div className="feature">
@@ -83,49 +81,47 @@ const Home = () => {
             </p>
           </div>
           <div className="feature">
-            <h3>🔮 AI Predictions</h3>
+            <h3>🔮 Probability-Based Forecasts</h3>
             <p>
-              Machine learning algorithms provide 10-day forecasts with
-              unprecedented accuracy and reliability.
+              Advanced statistical models deliver multi-day future predictions with
+              confidence scores and probability metrics, plus access to historical weather patterns.
             </p>
           </div>
         </div>
       </section>
 
 
-      {/* Testimonials Section */}
-      <section className="testimonials">
-        <h2>What Our Users Say</h2>
-        <div className="testimonial-cards">
-          <div className="testimonial">
-            <div className="testimonial-content">
-              "Astrokites has revolutionized how I plan my outdoor activities. The accuracy is incredible!"
+      {/* Why Choose Us Section */}
+      <section className="why-choose-us">
+        <h2>Why Choose Astrokites</h2>
+        <p className="section-subtitle">
+          Powered by advanced statistical models and real-world data
+        </p>
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-icon">🌍</div>
+            <div className="stat-number">200K+</div>
+            <div className="stat-label">Global Locations</div>
+            <div className="stat-description">
+              Hyper-local weather data for cities worldwide
             </div>
-            <div className="testimonial-author">
-              <div className="author-name">Sarah Johnson</div>
-              <div className="author-title">Outdoor Enthusiast</div>
-            </div>
-            <div className="testimonial-rating">⭐⭐⭐⭐⭐</div>
           </div>
-          <div className="testimonial">
-            <div className="testimonial-content">
-              "As a farmer, I rely on precise weather data. Astrokites gives me the edge I need."
+          <div className="stat-card">
+            <div className="stat-icon">📈</div>
+            <div className="stat-number">30+ Years</div>
+            <div className="stat-label">Historical Data</div>
+            <div className="stat-description">
+              Comprehensive weather archives for trend analysis
             </div>
-            <div className="testimonial-author">
-              <div className="author-name">Mike Chen</div>
-              <div className="author-title">Agricultural Professional</div>
-            </div>
-            <div className="testimonial-rating">⭐⭐⭐⭐⭐</div>
           </div>
-          <div className="testimonial">
-            <div className="testimonial-content">
-              "The interface is beautiful and the data is always up-to-date. Highly recommended!"
-            </div>
-            <div className="testimonial-author">
-              <div className="author-name">Emily Rodriguez</div>
-              <div className="author-title">Weather Enthusiast</div>
-            </div>
-            <div className="testimonial-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+        <div className="data-sources">
+          <h3>Trusted Data Sources</h3>
+          <div className="sources-list">
+            <div className="source-item">🛰️ NASA POWER API</div>
+            <div className="source-item">🌐 OpenStreetMap</div>
+            <div className="source-item">📡 Satellite Imagery</div>
+            <div className="source-item">🔬 Statistical Models</div>
           </div>
         </div>
       </section>
