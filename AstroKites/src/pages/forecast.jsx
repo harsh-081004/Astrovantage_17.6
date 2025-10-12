@@ -169,7 +169,7 @@ const formatDate = (d) => d.toISOString().split("T")[0];
 };
 
 // Simple SVG line chart component (dependency-free)
-const LineChart = ({ data = [], height = 140, stroke = "#2978b5", label, compact = false, labels = [], unit = "" }) => {
+const LineChart = ({ data = [], height = 140, stroke = "#2978b5", label, compact = false, labels = [], unit = "", showYearLabels = false }) => {
   // data: array of numbers
   // For compact mode, we use a fixed width and skip rendering some points for large datasets
   const isLargeDataset = data.length > 100;
@@ -245,41 +245,97 @@ const LineChart = ({ data = [], height = 140, stroke = "#2978b5", label, compact
   const handleMouseLeave = () => {
     setHoveredPoint(null);
   };
+
+  // Calculate positions for axis labels
+  const getAxisLabelPositions = () => {
+    if (!labels || labels.length === 0) return [];
+    
+    const totalPoints = compact && isLargeDataset ? pointIndices.length - 1 : data.length - 1;
+    const positions = [];
+    
+    if (showYearLabels && labels.length > 12) {
+      // For year/month data spanning multiple years, show strategic labels
+      const yearChanges = [];
+      let currentYear = null;
+      
+      labels.forEach((label, index) => {
+        const year = label.includes(' ') ? label.split(' ')[1] : null;
+        if (year && year !== currentYear) {
+          yearChanges.push({ index, label, year });
+          currentYear = year;
+        }
+      });
+      
+      // Show first, year changes, and last
+      const strategicIndices = [0, ...yearChanges.map(yc => yc.index), labels.length - 1];
+      const uniqueIndices = [...new Set(strategicIndices)].sort((a, b) => a - b);
+      
+      uniqueIndices.forEach(idx => {
+        if (idx < labels.length) {
+          const i = compact && isLargeDataset ? pointIndices.indexOf(idx) : idx;
+          const x = (i / (totalPoints || 1)) * (width - 24) + 12;
+          positions.push({ x, label: labels[idx], index: idx });
+        }
+      });
+    } else {
+      // Default behavior: show first, middle, and last
+      const indices = [0, Math.floor((labels.length - 1) / 2), labels.length - 1];
+      indices.forEach(idx => {
+        if (idx < labels.length) {
+          const i = compact && isLargeDataset ? pointIndices.indexOf(idx) : idx;
+          const x = (i / (totalPoints || 1)) * (width - 24) + 12;
+          positions.push({ x, label: labels[idx], index: idx });
+        }
+      });
+    }
+    
+    return positions;
+  };
+
+  const axisLabelPositions = getAxisLabelPositions();
   
   return (
     <div className="line-chart-container" style={{ position: 'relative' }}>
       <svg className="line-chart" viewBox={`0 0 ${width} ${height}`} width="100%" height={height}>
+        {/* Grid lines */}
+        <defs>
+          <pattern id="grid" width="40" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 20" fill="none" stroke="#f0f0f0" strokeWidth="0.5"/>
+          </pattern>
+        </defs>
+        <rect width={width} height={height} fill="url(#grid)" opacity="0.3"/>
+        
+        {/* Main chart line */}
         <polyline points={points} fill="none" stroke={stroke} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
+        
+        {/* Axes */}
         <line x1={12} y1={height - 12} x2={width - 12} y2={height - 12} stroke="#e0e0e0" strokeWidth="1" />
         <line x1={12} y1={12} x2={12} y2={height - 12} stroke="#e0e0e0" strokeWidth="1" />
-        <text x={16} y={20} fill="#666" fontSize="10">{max.toFixed(1)}{unit}</text>
-        <text x={16} y={height - 16} fill="#666" fontSize="10">{min.toFixed(1)}{unit}</text>
-        {labels && labels.length > 0 && (
-          <>
-            {(() => {
-              const totalPoints = compact && isLargeDataset ? pointIndices.length - 1 : data.length - 1;
-              const posForIndex = (idx) => {
-                const i = compact && isLargeDataset ? pointIndices.indexOf(idx) : idx;
-                const x = (i / (totalPoints || 1)) * (width - 24) + 12;
-                return x;
-              };
-              const firstIdx = 0;
-              const midIdx = Math.floor((data.length - 1) / 2);
-              const lastIdx = data.length - 1;
-              const firstLabel = labels[firstIdx] || '';
-              const midLabel = labels[midIdx] || '';
-              const lastLabel = labels[lastIdx] || '';
-              return (
-                <g>
-                  <text x={posForIndex(firstIdx)} y={height - 2} fill="#666" fontSize="10" textAnchor="start">{firstLabel}</text>
-                  <text x={posForIndex(midIdx)} y={height - 2} fill="#666" fontSize="10" textAnchor="middle">{midLabel}</text>
-                  <text x={posForIndex(lastIdx)} y={height - 2} fill="#666" fontSize="10" textAnchor="end">{lastLabel}</text>
-                </g>
-              );
-            })()}
-          </>
-        )}
-        {/* Only render circles for non-compact view or small datasets */}
+        
+        {/* Y-axis labels */}
+        <text x={16} y={20} fill="#666" fontSize="10" fontWeight="500">{max.toFixed(1)}{unit}</text>
+        <text x={16} y={height - 16} fill="#666" fontSize="10" fontWeight="500">{min.toFixed(1)}{unit}</text>
+        
+        {/* X-axis tick marks and labels */}
+        {axisLabelPositions.map((pos, index) => (
+          <g key={index}>
+            {/* Tick mark */}
+            <line x1={pos.x} y1={height - 12} x2={pos.x} y2={height - 8} stroke="#666" strokeWidth="1" />
+            {/* Label */}
+            <text 
+              x={pos.x} 
+              y={height - 2} 
+              fill="#666" 
+              fontSize="9" 
+              textAnchor="middle"
+              fontWeight="400"
+            >
+              {pos.label}
+            </text>
+          </g>
+        ))}
+        
+        {/* Data points */}
         {(!compact || !isLargeDataset) && pointIndices.map((dataIndex) => {
           const value = data[dataIndex];
           if (value === null || value === undefined || isNaN(value)) return null;
@@ -299,6 +355,7 @@ const LineChart = ({ data = [], height = 140, stroke = "#2978b5", label, compact
                 r={compact ? 2 : 4} 
                 fill="#fff" 
                 stroke={stroke} 
+                strokeWidth="2"
               />
               {/* Invisible larger circle for better hover detection */}
               <circle 
