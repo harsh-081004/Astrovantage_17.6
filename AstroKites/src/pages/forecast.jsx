@@ -225,7 +225,7 @@ const LineChart = ({ data = [], height = 140, stroke = "#2978b5", label, compact
       const i = compact && isLargeDataset ? pointIndices.indexOf(dataIndex) : dataIndex;
       const totalPoints = compact && isLargeDataset ? pointIndices.length - 1 : data.length - 1;
       const x = (i / (totalPoints || 1)) * (width - 24) + 12;
-      const y = height - ((value - min) / range) * (height - 28) - 12;
+      const y = height - 30 - ((value - min) / range) * (height - 42);
       return `${x},${y}`;
     })
     .filter(point => point !== null)
@@ -308,27 +308,99 @@ const LineChart = ({ data = [], height = 140, stroke = "#2978b5", label, compact
         {/* Main chart line */}
         <polyline points={points} fill="none" stroke={stroke} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
         
-        {/* Axes */}
-        <line x1={12} y1={height - 12} x2={width - 12} y2={height - 12} stroke="#e0e0e0" strokeWidth="1" />
-        <line x1={12} y1={12} x2={12} y2={height - 12} stroke="#e0e0e0" strokeWidth="1" />
+        {/* Axes with thicker lines */}
+        <line x1={12} y1={height - 30} x2={width - 12} y2={height - 30} stroke="#333" strokeWidth="2" />
+        <line x1={12} y1={12} x2={12} y2={height - 30} stroke="#333" strokeWidth="2" />
         
-        {/* Y-axis labels */}
-        <text x={16} y={20} fill="#666" fontSize="10" fontWeight="500">{max.toFixed(1)}{unit}</text>
-        <text x={16} y={height - 16} fill="#666" fontSize="10" fontWeight="500">{min.toFixed(1)}{unit}</text>
+        {/* Y-axis values and grid lines */}
+        {(() => {
+          const numYTicks = 5;
+          const yTicks = [];
+          for (let i = 0; i <= numYTicks; i++) {
+            const value = min + (range * i / numYTicks);
+            const y = height - 30 - ((value - min) / range) * (height - 42);
+            yTicks.push({ value, y });
+          }
+          return yTicks.map((tick, index) => (
+            <g key={index}>
+              {/* Horizontal grid line */}
+              <line 
+                x1={12} 
+                y1={tick.y} 
+                x2={width - 12} 
+                y2={tick.y} 
+                stroke="#e0e0e0" 
+                strokeWidth="1" 
+                strokeDasharray="3,3"
+                opacity="0.5"
+              />
+              {/* Y-axis tick mark */}
+              <line 
+                x1={8} 
+                y1={tick.y} 
+                x2={12} 
+                y2={tick.y} 
+                stroke="#333" 
+                strokeWidth="2"
+              />
+              {/* Y-axis label */}
+              <text 
+                x={8} 
+                y={tick.y + 4} 
+                fill="#333" 
+                fontSize="11" 
+                fontWeight="600"
+                textAnchor="end"
+              >
+                {tick.value.toFixed(1)}
+              </text>
+            </g>
+          ));
+        })()}
+        
+        {/* Y-axis unit label */}
+        <text 
+          x={8} 
+          y={10} 
+          fill="#333" 
+          fontSize="12" 
+          fontWeight="700"
+          textAnchor="middle"
+        >
+          {unit}
+        </text>
         
         {/* X-axis tick marks and labels */}
         {axisLabelPositions.map((pos, index) => (
           <g key={index}>
-            {/* Tick mark */}
-            <line x1={pos.x} y1={height - 12} x2={pos.x} y2={height - 8} stroke="#666" strokeWidth="1" />
-            {/* Label */}
+            {/* Vertical grid line */}
+            <line 
+              x1={pos.x} 
+              y1={12} 
+              x2={pos.x} 
+              y2={height - 30} 
+              stroke="#e0e0e0" 
+              strokeWidth="1" 
+              strokeDasharray="3,3"
+              opacity="0.3"
+            />
+            {/* X-axis tick mark */}
+            <line 
+              x1={pos.x} 
+              y1={height - 30} 
+              x2={pos.x} 
+              y2={height - 26} 
+              stroke="#333" 
+              strokeWidth="2"
+            />
+            {/* X-axis label */}
             <text 
               x={pos.x} 
-              y={height - 2} 
-              fill="#666" 
-              fontSize="9" 
+              y={height - 14} 
+              fill="#333" 
+              fontSize="10" 
               textAnchor="middle"
-              fontWeight="400"
+              fontWeight="600"
             >
               {pos.label}
             </text>
@@ -343,7 +415,7 @@ const LineChart = ({ data = [], height = 140, stroke = "#2978b5", label, compact
           const i = compact && isLargeDataset ? pointIndices.indexOf(dataIndex) : dataIndex;
           const totalPoints = compact && isLargeDataset ? pointIndices.length - 1 : data.length - 1;
           const x = (i / (totalPoints || 1)) * (width - 24) + 12;
-          const y = height - ((value - min) / range) * (height - 28) - 12;
+          const y = height - 30 - ((value - min) / range) * (height - 42);
           return (
             <g key={dataIndex} 
                onMouseEnter={() => handleMouseEnter(dataIndex, x, y, data[dataIndex])}
